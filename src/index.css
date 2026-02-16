@@ -45,18 +45,20 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* brand */
-  --color-brand-primary: hsl(var(--primary));
-  --color-brand-secondary: hsl(var(--secondary));
-  --color-brand-text: hsl(var(--text));
-  --color-brand-text-light: hsl(var(--text-light));
-  --color-brand-bg: hsl(var(--bg));
-  --color-brand-white: hsl(var(--white));
-  --color-brand-success: hsl(var(--success));
-  --color-brand-warning: hsl(var(--warning));
-  --color-brand-error: hsl(var(--error));
+  --color-brand-primary: hsl(var(--brand-primary));
+  --color-brand-secondary: hsl(var(--brand-secondary));
+  --color-brand-text: hsl(var(--brand-text));
+  --color-brand-text-light: hsl(var(--brand-text-light));
+  --color-brand-bg: hsl(var(--brand-bg));
+  --color-brand-white: hsl(var(--brand-white));
+  --color-brand-success: hsl(var(--brand-success));
+  --color-brand-warning: hsl(var(--brand-warning));
+  --color-brand-error: hsl(var(--brand-error));
 }
 
 :root {
+  color-scheme: initial;
+
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -91,19 +93,20 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* brand */
-  --primary: 218, 86%, 31%;
-  --secondary: 42, 87%, 53%;
-  --text: 0, 0%, 12%;
-  --text-light: 220, 9%, 46%;
-  --bg: 210, 22%, 96%;
-  --white: 0, 0%, 100%;
-
-  --success: 142, 71%, 45%;
-  --warning: 38, 92%, 50%;
-  --error: 0, 84%, 60%;
+  --brand-primary: 218, 86%, 31%;
+  --brand-secondary: 42, 87%, 53%;
+  --brand-text: 0, 0%, 12%;
+  --brand-text-light: 220, 9%, 46%;
+  --brand-bg: 210, 22%, 96%;
+  --brand-white: 0, 0%, 100%;
+  --brand-success: 142, 71%, 45%;
+  --brand-warning: 38, 92%, 50%;
+  --brand-error: 0, 84%, 60%;
 }
 
 .dark {
+  color-scheme: dark;
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -137,16 +140,15 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   /* brand */
-  --primary: 218, 86%, 69%;
-  --secondary: 42, 87%, 47%;
-  --text: 0, 0%, 88%;
-  --text-light: 220, 9%, 54%;
-  --bg: 210, 22%, 4%;
-  --white: 0, 0%, 0%;
-
-  --success: 142, 71%, 55%;
-  --warning: 38, 92%, 50%;
-  --error: 0, 84%, 40%;
+  --brand-primary: 218, 86%, 69%;
+  --brand-secondary: 42, 87%, 47%;
+  --brand-text: 0, 0%, 88%;
+  --brand-text-light: 220, 9%, 54%;
+  --brand-bg: 210, 22%, 4%;
+  --brand-white: 0, 0%, 0%;
+  --brand-success: 142, 71%, 55%;
+  --brand-warning: 38, 92%, 50%;
+  --brand-error: 0, 84%, 60%;
 }
 
 @layer base {
