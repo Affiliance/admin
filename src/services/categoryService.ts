@@ -70,6 +70,15 @@ export const categoryService = {
     });
   },
 
+  // http://affilliance.runasp.net/api/Category (POST: create single category)
+  createCategory: async (data: CreateCategoryRequest): Promise<void> => {
+    await axios.post(`${API_BASE_URL}/api/Category`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+  },
+
   // 5- http://affilliance.runasp.net/api/Category/{id}/safe (DEL: id param is required - Delete category safely)
   // Assuming this is a custom endpoint pattern like /api/Category/{id}/safe
   safeDeleteCategory: async (id: number): Promise<void> => {
