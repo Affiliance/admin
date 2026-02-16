@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -14,6 +14,7 @@ import {
   Moon,
   Sun,
   Monitor,
+  Menu,
 } from "lucide-react";
 import { motion } from "motion/react";
 import { useAdmin } from "@/contexts/AdminContext";
@@ -27,6 +28,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet.tsx";
 import { useTheme } from "@/components/theme-provider";
 import axios from "axios";
 import { toast } from "sonner";
@@ -34,8 +36,10 @@ import { toast } from "sonner";
 const SideBar = () => {
   const { setAdminData } = useAdmin();
   const navigate = useNavigate();
+  const location = useLocation();
   const { setTheme, theme } = useTheme();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navigation = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -60,8 +64,13 @@ const SideBar = () => {
     }
   };
 
-  return (
-    <div className="flex h-screen w-64 flex-col border-r bg-card text-card-foreground shadow-sm">
+  // Close mobile sidebar on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [location.pathname]);
+
+  const NavContent = () => (
+    <>
       <div className="flex h-16 items-center px-6">
         {/* Replace with actual logo if available */}
         <span className="text-xl font-bold text-brand-primary">Affiliance</span>
@@ -74,7 +83,7 @@ const SideBar = () => {
               to={item.href}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                  "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground relative group",
                   isActive
                     ? "bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 hover:text-brand-primary"
                     : "text-muted-foreground"
@@ -88,15 +97,6 @@ const SideBar = () => {
                     className={cn("h-4 w-4", isActive ? "text-brand-primary" : "")}
                   />
                   <span>{item.name}</span>
-                  {isActive && (
-                    <motion.div
-                      layoutId="active-nav"
-                      className="absolute left-0 h-full w-1 rounded-r-md bg-brand-primary"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    />
-                  )}
                 </>
               )}
             </NavLink>
@@ -159,7 +159,33 @@ const SideBar = () => {
           </DialogContent>
         </Dialog>
       </div>
-    </div>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile Trigger */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Menu className="h-4 w-4" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 w-64">
+            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+            <div className="flex flex-col h-full bg-card text-card-foreground">
+              <NavContent />
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:flex h-screen w-64 flex-col border-r bg-card text-card-foreground shadow-sm sticky top-0">
+        <NavContent />
+      </div>
+    </>
   );
 };
 
