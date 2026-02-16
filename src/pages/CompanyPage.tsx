@@ -198,17 +198,17 @@ const CompanyPage = () => {
 
             {activeTab === "all" && (
               <div className="grid grid-cols-2 gap-2 w-full">
-                {!company.isVerified && (
-                  <Button size="sm" variant="outline" onClick={() => handleVerify(company.id)} disabled={processingId === company.id}>
-                    <ShieldCheck className="w-3 h-3 mr-1 text-blue-500" /> Verify
-                  </Button>
-                )}
                 <Button size="sm" variant="secondary" onClick={() => handleSuspend(company.id)} disabled={processingId === company.id}>
                   <Ban className="w-3 h-3 mr-1" /> Suspend
                 </Button>
                 <Button size="sm" variant="outline" onClick={() => handleReactivate(company.id)} disabled={processingId === company.id}>
                   <RotateCw className="w-3 h-3 mr-1" /> Reactivate
                 </Button>
+                {!company.isVerified && (
+                  <Button className="col-span-2" size="sm" variant="outline" onClick={() => handleVerify(company.id)} disabled={processingId === company.id}>
+                    <ShieldCheck className="w-3 h-3 mr-1 text-blue-500" /> Verify
+                  </Button>
+                )}
               </div>
             )}
           </CardFooter>
@@ -218,71 +218,74 @@ const CompanyPage = () => {
   };
 
   return (
-    <div className="p-8 space-y-8">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-3xl font-bold tracking-tight bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-          Companies
-        </h2>
-        <p className="text-muted-foreground">
-          Manage companies, approvals, and verifications.
-        </p>
-      </div>
-
-      <Tabs defaultValue="pending" className="w-full" onValueChange={setActiveTab}>
-        <div className="flex items-center justify-between mb-4">
-          <TabsList>
-            <TabsTrigger value="pending">Pending Approval</TabsTrigger>
-            <TabsTrigger value="verified">Verified Companies</TabsTrigger>
-            <TabsTrigger value="all">All Companies</TabsTrigger>
-          </TabsList>
-
-          {activeTab === "all" && (
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search companies..."
-                  className="pl-8 w-[200px] lg:w-[300px]"
-                  value={filters.SearchKeyword}
-                  onChange={(e) => setFilters({ ...filters, SearchKeyword: e.target.value })}
-                />
-              </div>
-            </div>
-          )}
+    <>
+      <title>Admin - Companies</title>
+      <div className="p-8 space-y-8">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-bold tracking-tight bg-linear-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            Companies
+          </h2>
+          <p className="text-muted-foreground">
+            Manage companies, approvals, and verifications.
+          </p>
         </div>
 
-        <TabsContent value="pending" className="mt-0">
-          {isLoading ? (
-            <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No pending companies found.</div>}
-            </div>
-          )}
-        </TabsContent>
+        <Tabs defaultValue="pending" className="w-full" onValueChange={setActiveTab}>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+            <TabsList className="flex-wrap h-auto gap-1 w-full sm:w-auto justify-start">
+              <TabsTrigger value="pending" className="flex-1 sm:flex-none">Pending Approval</TabsTrigger>
+              <TabsTrigger value="verified" className="flex-1 sm:flex-none">Verified Companies</TabsTrigger>
+              <TabsTrigger value="all" className="flex-1 sm:flex-none">All Companies</TabsTrigger>
+            </TabsList>
 
-        <TabsContent value="verified" className="mt-0">
-          {isLoading ? (
-            <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No verified companies found.</div>}
-            </div>
-          )}
-        </TabsContent>
+            {activeTab === "all" && (
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <div className="relative w-full">
+                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="search"
+                    placeholder="Search companies..."
+                    className="pl-8 w-full sm:w-[300px]"
+                    value={filters.SearchKeyword}
+                    onChange={(e) => setFilters({ ...filters, SearchKeyword: e.target.value })}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
 
-        <TabsContent value="all" className="mt-0">
-          {isLoading ? (
-            <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No companies found matching your criteria.</div>}
-            </div>
-          )}
-        </TabsContent>
-      </Tabs>
-    </div>
+          <TabsContent value="pending" className="mt-0">
+            {isLoading ? (
+              <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No pending companies found.</div>}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="verified" className="mt-0">
+            {isLoading ? (
+              <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No verified companies found.</div>}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="all" className="mt-0">
+            {isLoading ? (
+              <div className="py-20 flex justify-center"><Loader2 className="animate-spin text-primary" /></div>
+            ) : (
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {companies.length > 0 ? companies.map(renderCompanyCard) : <div className="col-span-full text-center py-20 text-muted-foreground">No companies found matching your criteria.</div>}
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
+      </div>
+    </>
   );
 };
 
