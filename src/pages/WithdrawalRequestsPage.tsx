@@ -210,7 +210,7 @@ const WithdrawalRequestsPage = () => {
                 <Label>Status</Label>
                 <Select
                   value={filters.Status}
-                  onValueChange={(val) => handleFilterChange("Status", val)}
+                  onValueChange={(val: string) => handleFilterChange("Status", val)}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select status" />

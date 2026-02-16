@@ -16,7 +16,7 @@ import {
   Monitor,
   Menu,
 } from "lucide-react";
-import { motion } from "motion/react";
+
 import { useAdmin } from "@/contexts/AdminContext";
 import {
   Dialog,

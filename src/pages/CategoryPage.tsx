@@ -8,7 +8,7 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
+
   CardFooter,
   CardHeader,
   CardTitle,
@@ -27,13 +27,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import {
-  Check,
-  X,
   Loader2,
   Trash2,
   Plus,
   Pencil,
-  AlertTriangle,
   FolderOpen,
 } from "lucide-react";
 import { motion } from "motion/react";
